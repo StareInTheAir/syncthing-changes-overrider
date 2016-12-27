@@ -2,6 +2,7 @@
 PROJECT_PATH="github.com/StareInTheAir/syncthing-changes-overrider"
 BINARY_NAME="syncthing-changes-overrider"
 BINARY_FOLDER="$GOPATH/src/$PROJECT_PATH/bin"
+VERSION="v1.0"
 
 function print_exec_name() {
   printf "$BINARY_FOLDER/${GOOS}_$GOARCH/$BINARY_NAME"
@@ -18,7 +19,7 @@ function build() {
 
 function package() {
   printf ", zipping\n"
-  zip -qj9 "$BINARY_FOLDER/$BINARY_NAME-${GOOS}_$GOARCH.zip" $(print_exec_name) "$GOPATH/src/$PROJECT_PATH/OverriderConfig-default.json"
+  zip -qj9 "$BINARY_FOLDER/$BINARY_NAME-${GOOS}_$GOARCH-$VERSION.zip" $(print_exec_name) "$GOPATH/src/$PROJECT_PATH/OverriderConfig-default.json"
 }
 
 if [ -d "$BINARY_FOLDER" ]; then
