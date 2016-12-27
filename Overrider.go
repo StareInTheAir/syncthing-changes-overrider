@@ -91,6 +91,7 @@ func createSyncthingHttpRequest(config OverriderConfig, method string, httpComma
 }
 
 func overrideDirtySyncthingFolders(config OverriderConfig, client *http.Client, folders []string) {
+	overwroteChanges := false
 	for _, folder := range folders {
 		req := createSyncthingHttpRequest(config, "GET", "/rest/db/status?folder=" + folder)
 		resp, err := client.Do(req)
@@ -106,6 +107,11 @@ func overrideDirtySyncthingFolders(config OverriderConfig, client *http.Client, 
 			resp, err := client.Do(req)
 			dieOnError(err)
 			defer resp.Body.Close()
+			logOut.Println("Overwrote changes of folder " + folder)
+			overwroteChanges = true
 		}
+	}
+	if !overwroteChanges {
+		logOut.Println("No changes to override")
 	}
 }
