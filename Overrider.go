@@ -36,6 +36,10 @@ var logOut = log.New(os.Stdout, "", log.LstdFlags)
 var logErr = log.New(os.Stderr, "", log.LstdFlags)
 
 func main() {
+	if len(os.Args) == 1 && (os.Args[0] == "-v" || os.Args[0] == "--version") {
+		logOut.Println("Syncthing changes overrider v1.0")
+		os.Exit(0)
+	}
 	var config OverriderConfig
 
 	jsonBytes, err := ioutil.ReadFile("OverriderConfig.json")
