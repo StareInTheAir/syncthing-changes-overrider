@@ -53,6 +53,7 @@ func main() {
 	if config.LogToFile {
 		logFile, err := os.OpenFile("log.txt", os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
 		dieOnError(err)
+		defer logFile.Close()
 		logOut.SetOutput(io.MultiWriter(os.Stdout, logFile))
 		logErr.SetOutput(io.MultiWriter(os.Stderr, logFile))
 	}
