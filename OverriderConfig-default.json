@@ -3,5 +3,6 @@
   "apiKey": "JDJDJDJDJDJDJDJDJDJDJDJDJDJDJDJD",
   "ignoreInvalidSslCertificate": true,
   "overrideAllFolders": true,
-  "overrideFolderIds": []
+  "overrideFolderIds": [],
+  "logToFile": false
 }

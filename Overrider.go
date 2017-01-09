@@ -7,6 +7,7 @@ import (
 	"crypto/tls"
 	"log"
 	"os"
+	"io"
 )
 
 type OverriderConfig struct {
@@ -15,6 +16,7 @@ type OverriderConfig struct {
 	IgnoreInvalidSslCertificate bool
 	OverrideAllFolders          bool
 	OverrideFolderIds           []string
+	LogToFile                   bool
 }
 
 type RestSystemConfig struct {
@@ -47,6 +49,13 @@ func main() {
 	dieOnError(err)
 
 	json.Unmarshal(jsonBytes, &config)
+
+	if config.LogToFile {
+		logFile, err := os.OpenFile("log.txt", os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
+		dieOnError(err)
+		logOut.SetOutput(io.MultiWriter(os.Stdout, logFile))
+		logErr.SetOutput(io.MultiWriter(os.Stderr, logFile))
+	}
 	logOut.Println(config)
 
 	var client *http.Client
