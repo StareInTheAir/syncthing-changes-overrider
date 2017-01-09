@@ -37,7 +37,7 @@ var logErr = log.New(os.Stderr, "", log.LstdFlags)
 
 func main() {
 	if len(os.Args) == 1 && (os.Args[0] == "-v" || os.Args[0] == "--version") {
-		logOut.Println("Syncthing changes overrider v1.0")
+		logOut.Println("Syncthing changes overrider v1.1")
 		os.Exit(0)
 	}
 	var config OverriderConfig

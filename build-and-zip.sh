@@ -2,7 +2,7 @@
 PROJECT_PATH="github.com/StareInTheAir/syncthing-changes-overrider"
 BINARY_NAME="syncthing-changes-overrider"
 BINARY_FOLDER="$GOPATH/src/$PROJECT_PATH/bin"
-VERSION="v1.0"
+VERSION="v1.1"
 
 function print_exec_name() {
   printf "$BINARY_FOLDER/${GOOS}_$GOARCH/$BINARY_NAME"
