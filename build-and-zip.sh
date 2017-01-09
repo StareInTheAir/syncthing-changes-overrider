@@ -14,7 +14,15 @@ function print_exec_name() {
 function build() {
   printf "${GOOS}_$GOARCH: building"
   # -ldflags -w = no debug info
-  go build -o $(print_exec_name) -ldflags -w "$PROJECT_PATH"
+  # On windows: -H windowsgui = hide console window
+  go build -o $(print_exec_name) -ldflags "$(build_flags)" "$PROJECT_PATH"
+}
+
+function build_flags() {
+  printf -- -w
+  if [ "$GOOS" == "windows" ]; then
+   printf -- " -H=windowsgui"
+  fi
 }
 
 function package() {
