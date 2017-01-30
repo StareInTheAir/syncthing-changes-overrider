@@ -54,8 +54,8 @@ func main() {
 		logFile, err := os.OpenFile("log.txt", os.O_CREATE | os.O_APPEND | os.O_RDWR, 0666)
 		dieOnError(err)
 		defer logFile.Close()
-		logOut.SetOutput(io.MultiWriter(os.Stdout, logFile))
-		logErr.SetOutput(io.MultiWriter(os.Stderr, logFile))
+		logOut.SetOutput(io.MultiWriter(logFile, os.Stdout))
+		logErr.SetOutput(io.MultiWriter(logFile, os.Stderr))
 	}
 	logOut.Println(config)
 
@@ -89,8 +89,8 @@ func main() {
 		// only overwrite folder listed in config
 		overrideDirtySyncthingFolders(config, client, config.OverrideFolderIds)
 	}
-
 }
+
 func dieOnError(err error) {
 	if err != nil {
 		logErr.Fatalln(err)
