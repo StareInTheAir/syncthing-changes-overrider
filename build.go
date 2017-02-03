@@ -72,7 +72,12 @@ func buildAndPackage(goOs string, goArch string, windowsFaceless bool) {
 	} else {
 		zipName = fmt.Sprintf("%s/%s-%s_%s-%s.zip", OutputFolder, BinaryName, goOs, goArch, Version)
 	}
-	zipFiles := []archiveFile{{getOutputName(goOs, goArch, windowsFaceless), BinaryName}, {"./OverriderConfig-default.json", "OverriderConfig-default.json"}}
+	executableName := BinaryName
+	if goOs == "windows" {
+		executableName += ".exe"
+	}
+	zipFiles := []archiveFile{{getOutputName(goOs, goArch, windowsFaceless), executableName},
+		{"./OverriderConfig-default.json", "OverriderConfig-default.json"}}
 	packZip(zipName, zipFiles)
 	fmt.Println(", done")
 }
