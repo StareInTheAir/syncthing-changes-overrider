@@ -20,7 +20,6 @@ const (
 	OutputFolder = "./bin"
 	ProjectPath = "github.com/StareInTheAir/syncthing-changes-overrider/Overrider"
 	BinaryName = "syncthing-changes-overrider"
-	Version = "1.2"
 )
 
 type archiveFile struct {
@@ -29,6 +28,11 @@ type archiveFile struct {
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		log.Fatalln("Usage: go run build.go <version>")
+	}
+	version := os.Args[1]
+
 	os.RemoveAll(OutputFolder)
 	err := os.Mkdir(OutputFolder, 0775)
 	if err != nil {
@@ -36,23 +40,23 @@ func main() {
 	}
 
 	// MAC
-	//buildAndPackage("darwin", "386", false)
-	buildAndPackage("darwin", "amd64", false)
+	//buildAndPackage("darwin", "386", version, false)
+	buildAndPackage("darwin", "amd64", version, false)
 
 	// LINUX
-	buildAndPackage("linux", "386", false)
-	buildAndPackage("linux", "amd64", false)
-	buildAndPackage("linux", "arm", false)
-	buildAndPackage("linux", "arm64", false)
+	buildAndPackage("linux", "386", version, false)
+	buildAndPackage("linux", "amd64", version, false)
+	buildAndPackage("linux", "arm", version, false)
+	buildAndPackage("linux", "arm64", version, false)
 
 	// WINDOWS
-	buildAndPackage("windows", "386", false)
-	buildAndPackage("windows", "amd64", false)
-	buildAndPackage("windows", "386", true)
-	buildAndPackage("windows", "amd64", true)
+	buildAndPackage("windows", "386", version, false)
+	buildAndPackage("windows", "amd64", version, false)
+	buildAndPackage("windows", "386", version, true)
+	buildAndPackage("windows", "amd64", version, true)
 }
 
-func buildAndPackage(goOs string, goArch string, windowsFaceless bool) {
+func buildAndPackage(goOs string, goArch string, version string, windowsFaceless bool) {
 	if windowsFaceless {
 		fmt.Printf("%s_%s_faceless: building", goOs, goArch)
 	} else {
@@ -68,9 +72,9 @@ func buildAndPackage(goOs string, goArch string, windowsFaceless bool) {
 	fmt.Print(", zipping")
 	var zipName string
 	if windowsFaceless {
-		zipName = fmt.Sprintf("%s/%s-%s_%s_faceless-%s.zip", OutputFolder, BinaryName, goOs, goArch, Version)
+		zipName = fmt.Sprintf("%s/%s-%s_%s_faceless-%s.zip", OutputFolder, BinaryName, goOs, goArch, version)
 	} else {
-		zipName = fmt.Sprintf("%s/%s-%s_%s-%s.zip", OutputFolder, BinaryName, goOs, goArch, Version)
+		zipName = fmt.Sprintf("%s/%s-%s_%s-%s.zip", OutputFolder, BinaryName, goOs, goArch, version)
 	}
 	executableName := BinaryName
 	if goOs == "windows" {
