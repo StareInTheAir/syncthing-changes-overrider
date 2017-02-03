@@ -11,4 +11,6 @@ This program automates the overriding of these changes by using the [REST API of
 All settings are saved in `OverriderConfig.json` in the same directory as the binary file. A template JSON is given with [OverriderConfig-default.json](OverriderConfig-default.json). You will need to change the [API key](https://docs.syncthing.net/dev/rest.html#api-key) so that this application can use the REST API. If `overrideAllFolders` is set to `true`, changes of all folders are overridden, if set to `false` only the folders listed in `overrideFolderIds` are overridden. Other config parameters should be self-explanatory.
 
 ## Download
-Managed via [GitHub releases](../../releases)
+Managed via [GitHub releases](../../releases).
+
+A special faceless version is available for Windows, that doesn't open a console window when `syncthing-changes-overrider.exe` is executed. Log messages are still written to `log.txt` when `logToFile` is set to `true`.
